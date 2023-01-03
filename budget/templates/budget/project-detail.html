@@ -12,7 +12,7 @@
             <div class="col s12 m12 14">
                 <div class="card-panel">
                     <h6 class="bold">Total Budget</h6>
-                    <h2 class="bold">{{ project.budget }} CZK</h2>
+                    <h4 class="bold">{{ project.budget }} CZK</h4>
                 </div>
             </div>
 
@@ -20,11 +20,11 @@
                 <div class="card-panel">
                     <h6 class="bold">Budget Left</h6>
                     {% if project.budget_left > 0 %}
-                        <h2 class="bold green-text">{{ project.budget_left }} CZK</h2>
+                        <h4 class="bold green-text">{{ project.budget_left }} CZK</h4>
                     {% elif project.budget_left == 0 %}
-                        <h2 class="bold orange-text">{{ project.budget_left }} CZK</h2>
+                        <h4 class="bold orange-text">{{ project.budget_left }} CZK</h4>
                     {% else %}
-                        <h2 class="bold red-text">{{ project.budget_left }} CZK</h2>
+                        <h4 class="bold red-text">{{ project.budget_left }} CZK</h4>
                     {% endif %}
                 </div>
             </div>
@@ -32,13 +32,13 @@
             <div class="col s12 m6 14">
                 <div class="card-panel">
                     <h6 class="bold">Days to income</h6>
-                    <h2 class="bold">{{ project.days_to_income }}</h2>
+                    <h4 class="bold">{{ project.days_to_income }}</h4>
                 </div>
             </div>
             <div class="col s12 m6 14">
                 <div class="card-panel">
                     <h6 class="bold">Daily budget</h6>
-                    <h2 class="bold">{{ project.daily_budget }}</h2>
+                    <h4 class="bold">{{ project.daily_budget }}</h4>
                 </div>
             </div>
         </div>
