@@ -46,7 +46,7 @@ form ul li.category {
 @media(max-width: 992px){
     .section-stats h1{
         font-size: calc(16px + 6vw);
-}
+    }
 }
 
 /* project detail expenses */
@@ -56,6 +56,36 @@ form ul li.category {
     text-shadow: 0px 3px 4px rgba(0, 0, 0, .25);
     background-color: #6FCF97;
 }
+.expense_tabs {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 25px;
+}
+.expense_tabs input[type="radio"] {
+    display: none;
+}
+.expense_tabs label {
+    padding: 25px;
+    background: #F2F2F2;
+}
+
+.expense_tabs .tab {
+    width: 100%;
+    padding: 20px;
+    order: 1;
+    display: none;
+}
+
+.expense_tabs input[type='radio']:checked + label + .tab {
+    display: block;
+}
+
+.expense_tabs input[type='radio']:checked + label {
+    background: white;
+}
+
 .section-expenses .expense {
     font-size: 16px;
     border-radius: 0;

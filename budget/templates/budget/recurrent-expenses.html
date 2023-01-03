@@ -1,0 +1,91 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <a href="{% url 'list' %}" class="btn-large grey">
+        <span class="bold">Back to months</span>
+    </a>
+    <a href="{% url 'detail' %}" class="btn-large grey">
+        <span class="bold">Back to details</span>
+    </a>
+    <p>Month starts: {{ project.start_date }}</p>
+    <p>Month ends: {{ project.end_date }}</p>
+
+    <section class="section section-expenses">
+        <div class="row">
+            <button class="btn waves-effect right modal-trigger" href="#recExpenseModal">
+                <i class="material-icons white-text left">add circle</i>
+                Add Recurrent Expense</button>
+        </div>
+                    <ul class="z-depth-1">
+                   {% for expense in recurrent_expenses %}
+                        <li>
+                            <div class="card-panel z-depth-0 expense">
+                                <div class="row">
+                                    <div class="col 14">
+                                        <span class="date">{{ expense.spend_date }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.week_day }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.amount }} czk</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title bold">{{ expense.category }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.comment }}</span>
+                                    </div>
+                                    <a class="close-icon" onclick="deleteRecExpense(this)" data-id="{{ expense.id }}">
+                                        <i class="material-icons red-text right">close</i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+    </section>
+
+</div>
+
+<div id="recExpenseModal" class="modal">
+    <div class="modal-content">
+        <h4>Add Recurrent Expense</h4>
+
+        <form method="POST">
+            {% csrf_token %}
+                {{form_rec_expense.as_p}}
+            <button type="submit" class="btn">Add</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var elem = document.querySelector('.modal')
+    var instance = M.Modal.init(elem)
+
+    var elem = document.querySelector('select')
+    var instance = M.FormSelect.init(elem)
+
+    function deleteRecExpense(e){
+
+        let id = e.dataset.id
+        e.closest('li').remove()
+
+        fetch('', {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                'id': id
+            }),
+            credentials: 'same-origin'
+        })
+    }
+</script>
+
+{% endblock %}

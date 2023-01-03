@@ -1,16 +1,19 @@
 {% extends 'budget/base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 
 <div class="container">
     <a href="{% url 'list' %}" class="btn-large grey">
         <span class="bold">Back to months</span>
     </a>
+    <p>Month starts: {{ project.start_date }}</p>
+    <p>Month ends: {{ project.end_date }}</p>
     <section class="section section-stats">
         <div class="row">
             <div class="col s12 m12 14">
                 <div class="card-panel">
                     <h6 class="bold">Total Budget</h6>
-                    <h2 class="bold">{{ project.budget }}CZK</h2>
+                    <h2 class="bold">{{ project.budget }} CZK</h2>
                 </div>
             </div>
 
@@ -33,6 +36,12 @@
                     <h2 class="bold">{{ project.days_to_income }}</h2>
                 </div>
             </div>
+            <div class="col s12 m6 14">
+                <div class="card-panel">
+                    <h6 class="bold">Daily budget</h6>
+                    <h2 class="bold">{{ project.daily_budget }}</h2>
+                </div>
+            </div>
         </div>
     </section>
     <section class="section section-expenses">
@@ -41,33 +50,69 @@
                 <i class="material-icons white-text left">add circle</i>
                 Add Expense</button>
         </div>
+        <div class="row">
+            <button class="btn waves-effect right modal-trigger" href="{% url 'recurrent' %}">
+                Recurrent Expenses</button>
+        </div>
+            <div class="expense_tabs">
+                <input type="radio" name="expense_tabs" id="all_expense" checked="checked">
+                <label for="all_expense">All Expenses</label>
+                <div class="tab">
+                    <ul class="z-depth-1">
+                   {% for expense in expense_list %}
+                        <li>
+                            <div class="card-panel z-depth-0 expense">
+                                <div class="row">
+                                    <div class="col 14">
+                                        <span class="date">{{ expense.spend_date }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.week_day }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.amount }} czk</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title bold">{{ expense.category }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.comment }}</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title">{{ expense.day_total }}</span>
+                                    </div>
+                                    <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
+                                        <i class="material-icons red-text right">close</i>
+                                    </a>
 
-        <ul class="z-depth-1">
-
-            {% for expense in expense_list %}
-            <li>
-                <div class="card-panel z-depth-0 expense">
-                    <div class="row">
-                        <div class="col 16">
-                            <span class="title">{{ expense.title }}</span>
-                        </div>
-                        <div class="col 13">
-                            <span class="title">{{ expense.amount }} czk</span>
-                        </div>
-                        <div class="col 1">
-                            <span class="title bold">{{ expense.category.name }}</span>
-                        </div>
-
-                        <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                            <i class="material-icons red-text right">close</i>
-                        </a>
-
-                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                        </ul>
                 </div>
-            </li>
-            {% endfor %}
+                <input type="radio" name="expense_tabs" id="daily_expense">
+                <label for="daily_expense">Daily Expenses</label>
+                <div class="tab">
+                    <ul class="z-depth-1">
+                    {% for day, amount in day_expense_list.items %}
+                        <li>
+                            <div class="card-panel z-depth-0 expense">
+                                <div class="row">
+                                    <div class="col 2">
+                                        <span class="date">{{ day }}</span>
+                                    </div>
+                                    <div class="col ">
+                                        <span class="title">{{ amount }}</span>
+                                    </div>
 
-        </ul>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                        </ul>
+                </div>
+            </div>
     </section>
 
 </div>
@@ -78,18 +123,7 @@
 
         <form method="POST">
             {% csrf_token %}
-            <label for="title">Title</label>
-            <input name="title" id="title">
-
-            <label for="amount">Amount</label>
-            <input name="amount" id="amount">
-
-            <select name="category">
-                {% for category in category_list %}
-                    <option>{{ category.name }}</option>
-                {% endfor %}
-            </select>
-
+                {{form_expense.as_p}}
             <button type="submit" class="btn">Add</button>
         </form>
     </div>

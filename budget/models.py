@@ -23,9 +23,17 @@ class Project(models.Model):
 
     def days_to_income(self):
         if date.today() < self.start_date:
-            return self.end_date - self.start_date
+            return (self.end_date - self.start_date).days
         else:
-            return self.end_date - date.today()
+            return (self.end_date - date.today()).days
+
+    def daily_budget(self):
+        days_left = self.days_to_income()
+        budget_left = self.budget_left()
+        try:
+            return budget_left / days_left
+        except:
+            return 0
 
 
 class Category(models.Model):
@@ -35,10 +43,29 @@ class Category(models.Model):
 
 class Expense(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='expenses')
-    title = models.CharField(max_length=100)
-    amount = models.DecimalField(max_digits=8, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    spend_date = models.DateField(default=date.today())
+    comment = models.CharField(max_length=100, blank=True)
+    amount = models.IntegerField()
+    #category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.CharField(max_length=100)
 
+    def week_day(self):
+        weekdays = ['пн', 'вт', 'ср', 'чт', 'пт', 'cб', 'вс']
+        return weekdays[self.spend_date.weekday()]
 
     class Meta:
-        ordering = ('-amount', )
+        ordering = ('-spend_date', )
+
+
+class RecurrentExpense(models.Model):
+    spend_date = models.IntegerField()
+    comment = models.CharField(max_length=100, blank=True)
+    amount = models.IntegerField()
+    category = models.CharField(max_length=100)
+
+    def get_category(self):
+        self.category = 'Регулярные'
+        self.save()
+
+    class Meta:
+        ordering = ('-spend_date', )
