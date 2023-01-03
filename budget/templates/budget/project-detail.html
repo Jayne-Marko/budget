@@ -1,6 +1,5 @@
 {% extends 'budget/base.html' %}
 {% block content %}
-{% load crispy_forms_tags %}
 
 <div class="container">
     <a href="{% url 'list' %}" class="btn-large grey">
@@ -49,16 +48,39 @@
             <button class="btn waves-effect right modal-trigger" href="#expenseModal">
                 <i class="material-icons white-text left">add circle</i>
                 Add Expense</button>
+            <button onclick="location.href='{% url 'add_recurrent' project.slug %}'">Add Recurrent</button>
+
+            <a href="{% url 'recurrent' %}" class="btn-large grey">
+                <span class="bold">Recurrent Expenses List</span>
+            </a>
         </div>
-        <div class="row">
-            <button class="btn waves-effect right modal-trigger" href="{% url 'recurrent' %}">
-                Recurrent Expenses</button>
-        </div>
+
             <div class="expense_tabs">
                 <input type="radio" name="expense_tabs" id="all_expense" checked="checked">
                 <label for="all_expense">All Expenses</label>
                 <div class="tab">
                     <ul class="z-depth-1">
+                        <li>
+                            <div class="card-panel z-depth-0 expense">
+                                <div class="row">
+                                    <div class="col 14">
+                                        <span class="title bold">Дата</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title bold">День нед</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title bold">Сумма</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title bold">Категория</span>
+                                    </div>
+                                    <div class="col 14">
+                                        <span class="title bold">Комментарий</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                    {% for expense in expense_list %}
                         <li>
                             <div class="card-panel z-depth-0 expense">
@@ -69,17 +91,20 @@
                                     <div class="col 14">
                                         <span class="title">{{ expense.week_day }}</span>
                                     </div>
+                                    {% if expense.category == 'Доход' %}
+                                    <div class="col 14">
+                                        <span class="title green-text">{{ expense.amount }} czk</span>
+                                    </div>
+                                    {% else %}
                                     <div class="col 14">
                                         <span class="title">{{ expense.amount }} czk</span>
                                     </div>
+                                    {% endif %}
                                     <div class="col 14">
                                         <span class="title bold">{{ expense.category }}</span>
                                     </div>
                                     <div class="col 14">
                                         <span class="title">{{ expense.comment }}</span>
-                                    </div>
-                                    <div class="col 14">
-                                        <span class="title">{{ expense.day_total }}</span>
                                     </div>
                                     <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
                                         <i class="material-icons red-text right">close</i>
@@ -95,16 +120,34 @@
                 <label for="daily_expense">Daily Expenses</label>
                 <div class="tab">
                     <ul class="z-depth-1">
-                    {% for day, amount in day_expense_list.items %}
+                        <li>
+                            <div class="card-panel z-depth-0 expense">
+                                <div class="row">
+                                    <div class="col 2">
+                                        <span class="title bold">Дата</span>
+                                    </div>
+                                    <div class="col 1">
+                                        <span class="title bold">День нед</span>
+                                    </div>
+                                    <div class="col 1">
+                                        <span class="title bold">Сумма</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    {% for day, details in day_expense_list.items %}
                         <li>
                             <div class="card-panel z-depth-0 expense">
                                 <div class="row">
                                     <div class="col 2">
                                         <span class="date">{{ day }}</span>
                                     </div>
-                                    <div class="col ">
-                                        <span class="title">{{ amount }}</span>
+                                    {% for d in details %}
+                                    <div class="col 1">
+                                        <span class="title">{{ d }}</span>
                                     </div>
+                                    {% endfor %}
 
                                 </div>
                             </div>

@@ -3,14 +3,26 @@
 
 <div class="container">
 
-    <h1>My Projects</h1>
+    <h1>Months</h1>
 
     <div class="row">
         {% for project in project_list %}
-        <div class="col s12 13">
+        <div class="col s2 13">
             <div class="card-panel">
                 <h5>{{ project.name }}</h5>
-                <a href="{% url 'detail' project.slug %}" class="btn">Visit</a>
+                <p>Dates: {{ project.start_date }} - {{ project.end_date }}</p>
+                <p>Budget: {{ project.budget }} czk</p>
+                <div class="row">
+                    <div class="col s12 13">
+                        <a href="{% url 'detail' project.slug %}" class="btn">Open</a>
+                    </div>
+                    <div class="col s12 13">
+                        <a href="{% url 'edit' project.pk %}" class="btn">Edit</a>
+                    </div>
+                    <div class="col s12 13">
+                        <a href="{% url 'delete' project.pk %}" class="btn">Delete</a>
+                    </div>
+                </div>
             </div>
         </div>
         {% empty %}
@@ -18,13 +30,13 @@
             <h3 class="grey-text">Sorry, you don't have any projects yet.</h3>
             <a href="{% url 'add' %}" class="btn-large grey">
                 <i class="material-icons white-text left">add circle</i>
-                <span class="bold">Add Projects</span>
+                <span class="bold">Add Month</span>
             </a>
         </div>
         {% endfor %}
         <a href="{% url 'add' %}" class="btn-large grey">
             <i class="material-icons white-text left">add circle</i>
-            <span class="bold">Add Projects</span>
+            <span class="bold">Add Month</span>
         </a>
     </div>
 

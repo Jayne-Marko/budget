@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Project, Expense, Category
+from .models import Project, Expense, RecurrentExpense
 # Register your models here.
 
 admin.site.register(Project)
 admin.site.register(Expense)
-admin.site.register(Category)
+admin.site.register(RecurrentExpense)

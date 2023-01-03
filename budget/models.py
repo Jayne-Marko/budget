@@ -1,4 +1,4 @@
-from datetime import date, timezone
+from datetime import date
 from django.db import models
 from django.utils.text import slugify
 
@@ -17,9 +17,13 @@ class Project(models.Model):
     def budget_left(self):
         expense_list = Expense.objects.filter(project=self)
         total_expense_amount = 0
+        total_income = self.budget
         for expense in expense_list:
-            total_expense_amount += expense.amount
-        return self.budget - total_expense_amount
+            if expense.category != 'Доход':
+                total_expense_amount += expense.amount
+            else:
+                total_income += expense.amount
+        return total_income - total_expense_amount
 
     def days_to_income(self):
         if date.today() < self.start_date:
@@ -31,14 +35,9 @@ class Project(models.Model):
         days_left = self.days_to_income()
         budget_left = self.budget_left()
         try:
-            return budget_left / days_left
+            return round(budget_left / days_left)
         except:
             return 0
-
-
-class Category(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
 
 
 class Expense(models.Model):
@@ -46,7 +45,6 @@ class Expense(models.Model):
     spend_date = models.DateField(default=date.today())
     comment = models.CharField(max_length=100, blank=True)
     amount = models.IntegerField()
-    #category = models.ForeignKey(Category, on_delete=models.CASCADE)
     category = models.CharField(max_length=100)
 
     def week_day(self):

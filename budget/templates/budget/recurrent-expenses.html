@@ -1,16 +1,10 @@
 {% extends 'budget/base.html' %}
 {% block content %}
-{% load crispy_forms_tags %}
 
 <div class="container">
     <a href="{% url 'list' %}" class="btn-large grey">
         <span class="bold">Back to months</span>
     </a>
-    <a href="{% url 'detail' %}" class="btn-large grey">
-        <span class="bold">Back to details</span>
-    </a>
-    <p>Month starts: {{ project.start_date }}</p>
-    <p>Month ends: {{ project.end_date }}</p>
 
     <section class="section section-expenses">
         <div class="row">
@@ -54,7 +48,6 @@
 <div id="recExpenseModal" class="modal">
     <div class="modal-content">
         <h4>Add Recurrent Expense</h4>
-
         <form method="POST">
             {% csrf_token %}
                 {{form_rec_expense.as_p}}
