@@ -3,8 +3,11 @@
 
 <div class="container">
 
-    <h1>Months</h1>
-
+    <h1>Бюджет</h1>
+    <a href="{% url 'add' %}" class="btn-large green">
+            <i class="material-icons white-text left">add circle</i>
+            <span class="bold">Добавить месяц</span>
+    </a>
     <div class="row">
         {% for project in project_list %}
         <div class="col s2 13">
@@ -34,10 +37,6 @@
             </a>
         </div>
         {% endfor %}
-        <a href="{% url 'add' %}" class="btn-large grey">
-            <i class="material-icons white-text left">add circle</i>
-            <span class="bold">Add Month</span>
-        </a>
     </div>
 
 </div>

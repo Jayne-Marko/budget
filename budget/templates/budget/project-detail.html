@@ -78,6 +78,9 @@
                                     <div class="col 14">
                                         <span class="title bold">Комментарий</span>
                                     </div>
+                                    <div class="col 14">
+                                        <span class="title bold">Удалить</span>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -106,10 +109,11 @@
                                     <div class="col 14">
                                         <span class="title">{{ expense.comment }}</span>
                                     </div>
+                                    <div class="col 14">
                                     <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                                        <i class="material-icons red-text right">close</i>
+                                        <i class="material-icons red-text left">close</i>
                                     </a>
-
+                                    </div>
                                 </div>
                             </div>
                         </li>

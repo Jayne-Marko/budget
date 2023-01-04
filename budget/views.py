@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Project, Expense, RecurrentExpense
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -36,7 +36,7 @@ def add_recurrent(request, project_slug):
                 amount=rec_expense.amount,
                 category=rec_expense.category
             ).save()
-    return render(request, "budget/add-recurrent.html", {'project': project})
+    return redirect('detail', project_slug=project.slug)
 
 
 def project_detail(request, project_slug):

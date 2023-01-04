@@ -1,13 +1,16 @@
 {% extends 'budget/base.html' %}
 {% load static %}
 {% block content %}
-
-<div class="container">
+<p>Точно хочешь удалить месяц?</p>
+<div class="row">
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn">Delete month</button>
+        <button type="submit" class="btn">Да, удалить</button>
     </form>
+    <a href="{% url 'list' %}" class="btn-large grey">
+        <span class="bold">Назад</span>
+    </a>
 </div>
 
 
