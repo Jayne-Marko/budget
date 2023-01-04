@@ -1,33 +1,35 @@
 {% extends 'budget/base.html' %}
 {% block content %}
 
-<div class="container">
 
-    <h1>Бюджет</h1>
-    <a href="{% url 'add' %}" class="btn-large green">
-            <i class="material-icons white-text left">add circle</i>
-            <span class="bold">Добавить месяц</span>
-    </a>
+<div class="container">
     <div class="row">
+        <div class="col-sm-12">
+            <h1 class="app-title">Бюджет</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button onclick="location.href='{% url 'add' %}'" class="add-month-button right">Добавить месяц</button>
+        </div>
+    </div>
         {% for project in project_list %}
-        <div class="col s2 13">
             <div class="card-panel">
                 <h5>{{ project.name }}</h5>
-                <p>Dates: {{ project.start_date }} - {{ project.end_date }}</p>
-                <p>Budget: {{ project.budget }} czk</p>
+                <span>Даты: {{ project.start_date }} - {{ project.end_date }}</span>
+                <span><p>Бюджет: {{ project.budget }} czk</p></span>
                 <div class="row">
-                    <div class="col s12 13">
-                        <a href="{% url 'detail' project.slug %}" class="btn">Open</a>
+                    <div class="col-sm-4">
+                        <button onclick="location.href='{% url 'detail' project.slug %}'" class="month-buttons center">Открыть</button>
                     </div>
-                    <div class="col s12 13">
-                        <a href="{% url 'edit' project.pk %}" class="btn">Edit</a>
+                    <div class="col-sm-4">
+                        <button onclick="location.href='{% url 'edit' project.pk %}'" class="month-buttons center">Редактировать</button>
                     </div>
-                    <div class="col s12 13">
-                        <a href="{% url 'delete' project.pk %}" class="btn">Delete</a>
+                    <div class="col-sm-4">
+                        <button onclick="location.href='{% url 'delete' project.pk %}'" class="month-buttons center">Удалить</button>
                     </div>
                 </div>
             </div>
-        </div>
         {% empty %}
         <div class="noproject-wrapper center">
             <h3 class="grey-text">Sorry, you don't have any projects yet.</h3>
@@ -38,7 +40,6 @@
         </div>
         {% endfor %}
     </div>
-
 </div>
 
 {% endblock %}
