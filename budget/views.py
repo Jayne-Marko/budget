@@ -1,4 +1,5 @@
 import json
+import calendar
 from datetime import datetime
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -8,6 +9,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from django.utils.text import slugify
 from .forms import ExpenseForm, RecurrentExpenseForm
 from django.urls import reverse_lazy
+from django.contrib.admin.widgets import AdminDateWidget
 
 
 def project_list(request):
@@ -21,10 +23,14 @@ def add_recurrent(request, project_slug):
     current_rec_expense_list = Expense.objects.filter(project=project, category='Регулярные')
     cr_expense_comments = [e.comment for e in current_rec_expense_list]
     for rec_expense in rec_expenses_list:
-        spend_date = datetime.today()
         if rec_expense.spend_date >= project.start_date.day:
-            spend_date = datetime(year=project.start_date.year, month=project.start_date.month,
+            try:
+                spend_date = datetime(year=project.start_date.year, month=project.start_date.month,
                                   day=rec_expense.spend_date)
+            except:
+                last_day = calendar.monthrange(project.start_date.year, project.start_date.month)
+                spend_date = datetime(year=project.start_date.year, month=project.start_date.month,
+                                      day=last_day[1])
         else:
             spend_date = datetime(year=project.end_date.year, month=project.end_date.month,
                                   day=rec_expense.spend_date)
@@ -121,21 +127,25 @@ def recurrent_expenses(request):
     return HttpResponseRedirect('recurrent')
 
 
-
 class ProjectCreateView(CreateView):
     model = Project
     template_name = 'budget/add-project.html'
-    fields = ('name', 'budget', 'start_date', 'end_date')
+    fields = ['budget', 'start_date', 'end_date']
+
+    def get_form(self, form_class=None):
+        form = super(ProjectCreateView, self).get_form(form_class)
+        form.fields['start_date'].widget = AdminDateWidget(attrs={'type': 'date'})
+        form.fields['end_date'].widget = AdminDateWidget(attrs={'type': 'date'})
+        return form
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
 
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect('/')
 
-    def get_success_url(self):
-        return slugify(self.request.POST['name'])
-
+    #def get_success_url(self):
+    #    return slugify(self.request.POST['slug'])
 
 class ProjectUpdateView(UpdateView):
     model = Project

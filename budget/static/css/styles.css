@@ -11,9 +11,6 @@ h1, h6 {
 .bold {
     font-weight: bold;
 }
-.row {
-    margin: 0!important;
-}
 
 /* project list (no-projects) */
 .noproject-wrapper {
@@ -28,17 +25,14 @@ h1, h6 {
 }
 
 /* project list all */
-.container {
-    width: 360px;
-    height: 800px;
+#month-list {
+    width: 100%;
     border-color: transparent;
     background-color: #E0E0E0;
     align-self: center;
     font-family: Alegreya+SC;
     padding: 0px 15px;
 }
-
-
 
 .app-title {
     color: rgba(23, 76, 106, 1);
@@ -50,46 +44,34 @@ h1, h6 {
     text-align: center;
 }
 
-.add-month-button {
+.green-button {
     display: block;
-    background-color: #698F63;
-    width: 163px;
-    height: 40px;
+    background-color: #26a69a;
     border: none;
     border-radius: 4px;
     color: white;
-    padding: 7px 5px;
     text-align: center;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 14px;
     font-family: Alegreya+SC;
     font-weight: bold;
     box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2), 0 2px 8px 0 rgba(0,0,0,0.19);
+    padding: 7px 10px;
 }
 
-.month-buttons {
+.blue-button {
     display: block;
     background-color: #296998;
-    width: 80px;
-    height: 40px;
     border: none;
     border-radius: 4px;
     color: white;
-    padding: 0px 0px;
     text-align: center;
     text-decoration: none;
     font-size: 13px;
     font-family: Alegreya+SC;
     font-weight: bold;
     box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2), 0 2px 8px 0 rgba(0,0,0,0.19);
-}
-
-.month-list {
-    border-color: transparent;
-    background-color: #698F63;
-    align-self: center;
-    font-family: Alegreya+SC;
-    padding: 0px 15px;
+    padding: 7px 10px;
 }
 
 .card-panel h5 {
@@ -109,69 +91,18 @@ form ul li.category {
     margin-right: 5px;
 }
 
-
-/* project detail statistic */
-.section-stats .card-panel{
-    margin: 8px;
-}
-.section-stats h1{
-    font-size: 4vw;
-    margin: 15px 0px;
-}
-@media(max-width: 992px){
-    .section-stats h1{
-        font-size: calc(16px + 6vw);
-    }
-}
-
-/* project detail expenses */
-.section-expenses button {
-    padding: 0px 40px;
-    font-weight: bold;
-    text-shadow: 0px 3px 4px rgba(0, 0, 0, .25);
-    background-color: #6FCF97;
-}
-.expense_tabs {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 25px;
-}
-.expense_tabs input[type="radio"] {
-    display: none;
-}
-.expense_tabs label {
-    padding: 25px;
-    background: #F2F2F2;
-}
-
-.expense_tabs .tab {
+#add-month-form {
     width: 100%;
-    padding: 20px;
-    order: 1;
-    display: none;
+    padding-top: 13px;
+    background-color: #E0E0E0;
 }
 
-.expense_tabs input[type='radio']:checked + label + .tab {
-    display: block;
+#del-month-form .col-xs-6 {
+    margin: 5px;
 }
 
-.expense_tabs input[type='radio']:checked + label {
-    background: white;
-}
-
-.section-expenses .expense {
-    font-size: 16px;
-    border-radius: 0;
-    margin: 0;
-}
-.section-expenses .expense .category {
-    font-size: 13px;
-}
-.section-expenses li:nth-child(even) .expense {
-    background-color: #F2F2F2;
-}
-.section-expenses .close-icon:hover {
-    cursor: pointer;
+#del-month-form {
+    width: 100%;
+    padding-top: 7px;
+    background-color: #E0E0E0;
 }

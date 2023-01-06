@@ -1,84 +1,93 @@
 {% extends 'budget/base.html' %}
 {% block content %}
 
-<div class="container">
-    <a href="{% url 'list' %}" class="btn-large grey">
-        <span class="bold">Back to months</span>
-    </a>
-    <p>Month starts: {{ project.start_date }}</p>
-    <p>Month ends: {{ project.end_date }}</p>
+<div id="month-details" class="container">
+    <div class="row right">
+        <div class="col-xs-12">
+            <button onclick="location.href='{% url 'list' %}'" class="green-button right">На главную</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="app-title">{{ project.name }}</h1>
+        </div>
+    </div>
+    <div class="row" id="dates">
+        <div class="col-xs-12">
+            <span>Даты: {{ project.start_date }} - {{ project.end_date }}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 p-1">
+            <button class="blue-button" onclick="location.href='{% url 'add_recurrent' project.slug %}'">Добавить регулярные</button></div>
+        <div class="col-xs-6 p-1">
+            <button class="blue-button" onclick="location.href='{% url 'recurrent' %}'">Список регулярных</button>
+        </div>
+    </div>
     <section class="section section-stats">
         <div class="row">
-            <div class="col s12 m12 14">
+            <div class="col-xs-12">
                 <div class="card-panel">
-                    <h6 class="bold">Total Budget</h6>
-                    <h4 class="bold">{{ project.budget }} CZK</h4>
+                    <h6 class="bold">Тотал доход</h6>
+                    <h5 class="bold">{{ project.budget }} czk</h5>
                 </div>
             </div>
 
-            <div class="col s12 m6 14">
+            <div class="col-xs-12">
                 <div class="card-panel">
-                    <h6 class="bold">Budget Left</h6>
-                    {% if project.budget_left > 0 %}
-                        <h4 class="bold green-text">{{ project.budget_left }} CZK</h4>
-                    {% elif project.budget_left == 0 %}
-                        <h4 class="bold orange-text">{{ project.budget_left }} CZK</h4>
+                    <h6 class="bold">Остаток</h6>
+                    <h5 class="bold">{{ project.budget_left }} czk</h5>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="card-panel">
+                    <h6 class="bold">Дней до зп</h6>
+                    <h5 class="bold">{{ project.days_to_income }}</h5>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="card-panel">
+                    <h6 class="bold">Ежедневный</h6>
+                    {% if project.daily_budget > 500 %}
+                        <h5 class="bold green-text">{{ project.daily_budget }} czk</h5>
+                    {% elif project.daily_budget > 300 %}
+                        <h5 class="bold orange-text">{{ project.daily_budget }} czk</h5>
                     {% else %}
-                        <h4 class="bold red-text">{{ project.budget_left }} CZK</h4>
+                        <h5 class="bold red-text">{{ project.daily_budget }} czk</h5>
                     {% endif %}
-                </div>
-            </div>
-
-            <div class="col s12 m6 14">
-                <div class="card-panel">
-                    <h6 class="bold">Days to income</h6>
-                    <h4 class="bold">{{ project.days_to_income }}</h4>
-                </div>
-            </div>
-            <div class="col s12 m6 14">
-                <div class="card-panel">
-                    <h6 class="bold">Daily budget</h6>
-                    <h4 class="bold">{{ project.daily_budget }}</h4>
                 </div>
             </div>
         </div>
     </section>
-    <section class="section section-expenses">
-        <div class="row">
-            <button class="btn waves-effect right modal-trigger" href="#expenseModal">
-                <i class="material-icons white-text left">add circle</i>
-                Add Expense</button>
-            <button onclick="location.href='{% url 'add_recurrent' project.slug %}'">Add Recurrent</button>
-
-            <a href="{% url 'recurrent' %}" class="btn-large grey">
-                <span class="bold">Recurrent Expenses List</span>
-            </a>
+    <div class="row right">
+            <button class="green-button waves-effect right modal-trigger" href="#expenseModal">Добавить расход</button>
         </div>
-
-            <div class="expense_tabs">
-                <input type="radio" name="expense_tabs" id="all_expense" checked="checked">
+    <section class="section section-expenses">
+        <div class="expense_tabs">
+            <input type="radio" name="expense_tabs" id="all_expense" checked="checked">
                 <label for="all_expense">All Expenses</label>
                 <div class="tab">
                     <ul class="z-depth-1">
                         <li>
                             <div class="card-panel z-depth-0 expense">
                                 <div class="row">
-                                    <div class="col 14">
+                                    <div class="col-xs-2 p-1">
                                         <span class="title bold">Дата</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-1 p-1">
                                         <span class="title bold">День нед</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-2 p-1">
                                         <span class="title bold">Сумма</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-3 p-1">
                                         <span class="title bold">Категория</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-3 p-1">
                                         <span class="title bold">Комментарий</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-1 p-1">
                                         <span class="title bold">Удалить</span>
                                     </div>
                                 </div>
@@ -88,28 +97,28 @@
                         <li>
                             <div class="card-panel z-depth-0 expense">
                                 <div class="row">
-                                    <div class="col 14">
+                                    <div class="col-xs-3 p-1">
                                         <span class="date">{{ expense.spend_date }}</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-1 p-1">
                                         <span class="title">{{ expense.week_day }}</span>
                                     </div>
                                     {% if expense.category == 'Доход' %}
-                                    <div class="col 14">
+                                    <div class="col-xs-3 p-1">
                                         <span class="title green-text">{{ expense.amount }} czk</span>
                                     </div>
                                     {% else %}
-                                    <div class="col 14">
+                                    <div class="col-xs-3 p-1">
                                         <span class="title">{{ expense.amount }} czk</span>
                                     </div>
                                     {% endif %}
-                                    <div class="col 14">
+                                    <div class="col-xs-4 p-1">
                                         <span class="title bold">{{ expense.category }}</span>
                                     </div>
                                     <div class="col 14">
                                         <span class="title">{{ expense.comment }}</span>
                                     </div>
-                                    <div class="col 14">
+                                    <div class="col-xs-3 p-1">
                                     <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
                                         <i class="material-icons red-text left">close</i>
                                     </a>

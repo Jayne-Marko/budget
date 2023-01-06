@@ -1,0 +1,96 @@
+#month-details {
+    width: 100%;
+    border-color: transparent;
+    background-color: #E0E0E0;
+    align-self: center;
+    font-family: Alegreya+SC;
+    padding: 0px 5px;
+    padding-top: 15px;
+}
+
+#dates {
+    font-weight: bold;
+    color: #606060;
+}
+
+.recurrent-buttons button {
+    display: block;
+    background-color: #296998;
+    width: 150px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 0px 0px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: Alegreya+SC;
+    font-weight: bold;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2), 0 2px 8px 0 rgba(0,0,0,0.19);
+}
+
+.recurrent-buttons .col-xs-6 {
+    margin: 7px;
+}
+/* project detail statistic */
+.section-stats .card-panel{
+    margin: 3px;
+    padding: 10px 10px;
+    width: 150px;
+}
+.section-stats h6{
+    margin: 3px 0px;
+    color: #606060;
+}
+
+.section-stats h5{
+    margin: 3px 0px;
+    color: #606060;
+}
+
+/* project detail expenses */
+
+.expense_tabs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 5px auto;
+    padding: 5px;
+}
+.expense_tabs input[type="radio"] {
+    display: none;
+}
+.expense_tabs label {
+    padding: 10px;
+    background: #F2F2F2;
+}
+
+.expense_tabs .tab {
+    width: 100%;
+    padding: 0px;
+    order: 1;
+    display: none;
+}
+
+.expense_tabs input[type='radio']:checked + label + .tab {
+    display: block;
+}
+
+.expense_tabs input[type='radio']:checked + label {
+    background: white;
+}
+
+.section-expenses .expense {
+    font-size: 12px;
+    border-radius: 0;
+    margin: 0px;
+    padding: 0px 0px;
+}
+
+.section-expenses li:nth-child(even) .expense {
+    background-color: #F2F2F2;
+}
+.section-expenses .close-icon:hover {
+    cursor: pointer;
+}
