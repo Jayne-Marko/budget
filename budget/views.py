@@ -20,7 +20,7 @@ def project_list(request):
 def add_recurrent(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     rec_expenses_list = RecurrentExpense.objects.all()
-    current_rec_expense_list = Expense.objects.filter(project=project, category='Регулярные')
+    current_rec_expense_list = Expense.objects.filter(project=project, category='Recurr')
     cr_expense_comments = [e.comment for e in current_rec_expense_list]
     for rec_expense in rec_expenses_list:
         if rec_expense.spend_date >= project.start_date.day:
@@ -44,6 +44,20 @@ def add_recurrent(request, project_slug):
             ).save()
     return redirect('detail', project_slug=project.slug)
 
+def edit_exp(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug)
+    expense_list = Expense.objects.filter(project=project)
+    for expense in expense_list:
+        if expense.category == 'Регулярные':
+            expense.category = 'Recurr'
+        elif expense.category == 'Запланированные':
+            expense.category = 'Plan'
+        elif expense.category == 'Повседневные':
+            expense.category = 'Daily'
+        elif expense.category == 'Доход':
+            expense.category = 'Income'
+    return redirect('detail', project_slug=project.slug)
+
 
 def project_detail(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
@@ -55,7 +69,7 @@ def project_detail(request, project_slug):
         weekdays = ['пн', 'вт', 'ср', 'чт', 'пт', 'cб', 'вс']
         day_expense_list = dict.fromkeys(expense_dates, ['', 0])
         for expense in expense_list:
-            if expense.category != 'Доход':
+            if expense.category != 'Income':
                 day_expense_list.update({expense.spend_date: [weekdays[expense.spend_date.weekday()], (day_expense_list[expense.spend_date][1] + expense.amount)]})
         return day_expense_list
 

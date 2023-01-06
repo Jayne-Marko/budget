@@ -2,14 +2,14 @@ from django import forms
 from django.forms import NumberInput
 
 spends = [
-    ('Повсед', 'Повседневные'),
-    ('План', 'Запланированные'),
-    ('Рег', 'Регулярные'),
-    ('Доход', 'Доход')
+    ('Daily', 'Daily'),
+    ('Plan', 'Plan'),
+    ('Recurr', 'Recurr'),
+    ('Income', 'Income')
 ]
 
 recurrent = [
-    ('Рег', 'Регулярные')
+    ('Recurr', 'Recurr')
 ]
 
 class ExpenseForm(forms.Form):

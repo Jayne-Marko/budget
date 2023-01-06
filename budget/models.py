@@ -28,7 +28,7 @@ class Project(models.Model):
         total_expense_amount = 0
         total_income = self.budget
         for expense in expense_list:
-            if expense.category != 'Доход':
+            if expense.category != 'Income':
                 total_expense_amount += expense.amount
             else:
                 total_income += expense.amount
@@ -71,7 +71,7 @@ class RecurrentExpense(models.Model):
     category = models.CharField(max_length=100)
 
     def get_category(self):
-        self.category = 'Регулярные'
+        self.category = 'Recurr'
         self.save()
 
     class Meta:

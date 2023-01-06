@@ -66,109 +66,171 @@
     <section class="section section-expenses">
         <div class="expense_tabs">
             <input type="radio" name="expense_tabs" id="all_expense" checked="checked">
-                <label for="all_expense">All Expenses</label>
-                <div class="tab">
-                    <ul class="z-depth-1">
-                        <li>
-                            <div class="card-panel z-depth-0 expense">
-                                <div class="row">
-                                    <div class="col-xs-2 p-1">
-                                        <span class="title bold">Дата</span>
-                                    </div>
-                                    <div class="col-xs-1 p-1">
-                                        <span class="title bold">День нед</span>
-                                    </div>
-                                    <div class="col-xs-2 p-1">
-                                        <span class="title bold">Сумма</span>
-                                    </div>
-                                    <div class="col-xs-3 p-1">
-                                        <span class="title bold">Категория</span>
-                                    </div>
-                                    <div class="col-xs-3 p-1">
-                                        <span class="title bold">Комментарий</span>
-                                    </div>
-                                    <div class="col-xs-1 p-1">
-                                        <span class="title bold">Удалить</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                   {% for expense in expense_list %}
-                        <li>
-                            <div class="card-panel z-depth-0 expense">
-                                <div class="row">
-                                    <div class="col-xs-3 p-1">
-                                        <span class="date">{{ expense.spend_date }}</span>
-                                    </div>
-                                    <div class="col-xs-1 p-1">
-                                        <span class="title">{{ expense.week_day }}</span>
-                                    </div>
-                                    {% if expense.category == 'Доход' %}
-                                    <div class="col-xs-3 p-1">
-                                        <span class="title green-text">{{ expense.amount }} czk</span>
-                                    </div>
-                                    {% else %}
-                                    <div class="col-xs-3 p-1">
-                                        <span class="title">{{ expense.amount }} czk</span>
-                                    </div>
-                                    {% endif %}
-                                    <div class="col-xs-4 p-1">
-                                        <span class="title bold">{{ expense.category }}</span>
-                                    </div>
-                                    <div class="col 14">
-                                        <span class="title">{{ expense.comment }}</span>
-                                    </div>
-                                    <div class="col-xs-3 p-1">
-                                    <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                                        <i class="material-icons red-text left">close</i>
+            <label for="all_expense">All</label>
+            <div class="tab">
+
+                <table class="expense">
+                    <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>День нед</th>
+                        <th>Сумма</th>
+                        <th>Категория</th>
+                        <th>Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for expense in expense_list %}
+                            <tr>
+                                <th><span class="date">{{ expense.spend_date }}</span></th>
+                                <th><span class="title">{{ expense.week_day }}</span></th>
+                                {% if expense.category == 'Income' %}
+                                <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                {% else %}
+                                <th><span class="title">{{ expense.amount }} czk</span>
+                                </th>
+                                {% endif %}
+                                <th><span class="title">{{ expense.category }}</span></th>
+                                <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
+                                    <i class="material-icons red-text left">close</i>
                                     </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                        </ul>
-                </div>
-                <input type="radio" name="expense_tabs" id="daily_expense">
-                <label for="daily_expense">Daily Expenses</label>
-                <div class="tab">
-                    <ul class="z-depth-1">
-                        <li>
-                            <div class="card-panel z-depth-0 expense">
-                                <div class="row">
-                                    <div class="col 2">
-                                        <span class="title bold">Дата</span>
-                                    </div>
-                                    <div class="col 1">
-                                        <span class="title bold">День нед</span>
-                                    </div>
-                                    <div class="col 1">
-                                        <span class="title bold">Сумма</span>
-                                    </div>
+                                </th>
+                            </tr>
 
-                                </div>
-                            </div>
-                        </li>
-                    {% for day, details in day_expense_list.items %}
-                        <li>
-                            <div class="card-panel z-depth-0 expense">
-                                <div class="row">
-                                    <div class="col 2">
-                                        <span class="date">{{ day }}</span>
-                                    </div>
-                                    {% for d in details %}
-                                    <div class="col 1">
-                                        <span class="title">{{ d }}</span>
-                                    </div>
-                                    {% endfor %}
-
-                                </div>
-                            </div>
-                        </li>
                     {% endfor %}
-                        </ul>
-                </div>
+                    </tbody>
+                </table>
+
             </div>
+            <input type="radio" name="expense_tabs" id="daily_expense">
+            <label for="daily_expense">Daily</label>
+                <div class="tab">
+                    <table class="expense">
+                        <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>День нед</th>
+                            <th>Сумма</th>
+                            <th>Категория</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tbody class="regular">
+                            {% for expense in expense_list %}
+                            {% if expense.category == 'Daily' %}
+                                <tr class="regular">
+                                    <th><span class="date">{{ expense.spend_date }}</span></th>
+                                    <th><span class="title">{{ expense.week_day }}</span></th>
+                                        {% if expense.category == 'Income' %}
+                                    <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                        {% else %}
+                                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                                        {% endif %}
+                                    <th><span class="title">{{ expense.category }}</span></th>
+                                    <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
+                                        <i class="material-icons red-text left">close</i>
+                                        </a>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <input type="radio" name="expense_tabs" id="plan_expense">
+            <label for="plan_expense">Plan</label>
+                <div class="tab">
+                    <table class="expense">
+                        <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>День нед</th>
+                            <th>Сумма</th>
+                            <th>Категория</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tbody class="regular">
+                            {% for expense in expense_list %}
+                            {% if expense.category == 'Plan' %}
+                                <tr class="regular">
+                                    <th><span class="date">{{ expense.spend_date }}</span></th>
+                                    <th><span class="title">{{ expense.week_day }}</span></th>
+                                        {% if expense.category == 'Income' %}
+                                    <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                        {% else %}
+                                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                                        {% endif %}
+                                    <th><span class="title">{{ expense.category }}</span></th>
+                                    <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
+                                        <i class="material-icons red-text left">close</i>
+                                        </a>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <input type="radio" name="expense_tabs" id="recurr_expense">
+            <label for="recurr_expense">Recurr</label>
+                <div class="tab">
+                    <table class="expense">
+                        <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>День нед</th>
+                            <th>Сумма</th>
+                            <th>Категория</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tbody class="regular">
+                            {% for expense in expense_list %}
+                            {% if expense.category == 'Recurr' %}
+                                <tr class="regular">
+                                    <th><span class="date">{{ expense.spend_date }}</span></th>
+                                    <th><span class="title">{{ expense.week_day }}</span></th>
+                                        {% if expense.category == 'Income' %}
+                                    <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                        {% else %}
+                                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                                        {% endif %}
+                                    <th><span class="title">{{ expense.category }}</span></th>
+                                    <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
+                                        <i class="material-icons red-text left">close</i>
+                                        </a>
+                                    </th>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <input type="radio" name="expense_tabs" id="total_expense">
+            <label for="total_expense">Total Expenses per Day</label>
+                <div class="tab">
+                    <table class="expense">
+                        <thead>
+                        <tr>
+                            <th><span class="title bold">Дата</span></th>
+                            <th><span class="title bold">День нед</span></th>
+                            <th><span class="title bold">Сумма</span></th>
+                        </tr>
+                        </thead>
+                        <tbody class="regular">
+                            {% for day, details in day_expense_list.items %}
+                            <tr>
+                                <th> <span class="date">{{ day }}</span></th>
+                                    {% for d in details %}
+                                <th> <span class="title">{{ d }}</span></th>
+                                    {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
     </section>
 
 </div>
@@ -179,7 +241,7 @@
 
         <form method="POST">
             {% csrf_token %}
-                {{form_expense.as_p}}
+            {{form_expense.as_p}}
             <button type="submit" class="btn">Add</button>
         </form>
     </div>
@@ -195,7 +257,8 @@
     function deleteExpense(e){
 
         let id = e.dataset.id
-        e.closest('li').remove()
+        e.closest('tr').remove()
+        document.location.reload(true)
 
         fetch('', {
             method: 'DELETE',
