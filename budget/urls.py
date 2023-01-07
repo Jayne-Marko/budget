@@ -26,6 +26,5 @@ urlpatterns = [
     path('<int:pk>/del', views.ProjectDeleteView.as_view(), name='delete'),
     path('recurrent', views.recurrent_expenses, name='recurrent'),
     path('<slug:project_slug>', views.project_detail, name='detail'),
-    path('<slug:project_slug>/addrec', views.add_recurrent, name='add_recurrent'),
-    path('<slug:project_slug>/editexp', views.edit_exp, name='edit_exp')
+    path('<slug:project_slug>/addrec', views.add_recurrent, name='add_recurrent')
 ]

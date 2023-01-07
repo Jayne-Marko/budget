@@ -12,9 +12,10 @@ recurrent = [
     ('Recurr', 'Recurr')
 ]
 
+
 class ExpenseForm(forms.Form):
     spend_date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
-    amount = forms.IntegerField()
+    amount = forms.CharField()
     category = forms.ChoiceField(choices=spends)
     comment = forms.CharField(required=False)
 

@@ -1,6 +1,6 @@
 import json
 import calendar
-from datetime import datetime
+from datetime import datetime, date
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
@@ -14,7 +14,11 @@ from django.contrib.admin.widgets import AdminDateWidget
 
 def project_list(request):
     project_list = Project.objects.all()
-    return render(request, 'budget/project-list.html', {'project_list': project_list})
+    past_months = [month for month in project_list if month.start_date <= date.today()]
+    fututre_months = [month for month in project_list if month.start_date > date.today()]
+    return render(request, 'budget/project-list.html', {'past_months': past_months,
+                                                        'future_months': fututre_months
+                                                        })
 
 
 def add_recurrent(request, project_slug):
@@ -43,21 +47,6 @@ def add_recurrent(request, project_slug):
                 category=rec_expense.category
             ).save()
     return redirect('detail', project_slug=project.slug)
-
-def edit_exp(request, project_slug):
-    project = get_object_or_404(Project, slug=project_slug)
-    expense_list = Expense.objects.filter(project=project)
-    for expense in expense_list:
-        if expense.category == 'Регулярные':
-            expense.category = 'Recurr'
-        elif expense.category == 'Запланированные':
-            expense.category = 'Plan'
-        elif expense.category == 'Повседневные':
-            expense.category = 'Daily'
-        elif expense.category == 'Доход':
-            expense.category = 'Income'
-    return redirect('detail', project_slug=project.slug)
-
 
 def project_detail(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
@@ -90,12 +79,13 @@ def project_detail(request, project_slug):
             comment = form_expense.cleaned_data['comment']
 
             #category = get_object_or_404(Category, project=project, name=category_name)
+            sum_amount = eval(amount)
 
             Expense.objects.create(
                 project=project,
                 spend_date=spend_date,
                 comment=comment,
-                amount=amount,
+                amount=sum_amount,
                 category=category_name
             ).save()
 
