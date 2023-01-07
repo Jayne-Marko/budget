@@ -14,7 +14,7 @@
             <tr>
                 <th>Дата</th>
                 <th>Сумма</th>
-                <th>Категория</th>
+                <th>Тип</th>
                 <th><span class="left">Коммент</span></th>
                 <th></th>
             </tr>
@@ -24,7 +24,7 @@
                 {% for expense in recurrent_expenses %}
                 <tr>
                     <th><span class="date">{{ expense.spend_date }}</span></th>
-                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                    <th><span class="title">{{ expense.amount }} Kč</span></th>
                     <th><span class="title">{{ expense.category }}</span></th>
                     <th><span class="title left">{{ expense.comment }}</span></th>
                     <th><a class="close-icon" onclick="deleteRecExpense(this)" data-id="{{ expense.id }}">

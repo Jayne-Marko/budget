@@ -29,14 +29,14 @@
             <div class="col-xs-12">
                 <div class="card-panel">
                     <h6 class="bold">Тотал доход</h6>
-                    <h5 class="bold">{{ project.budget }} czk</h5>
+                    <h5 class="bold">{{ project.budget }} Kč</h5>
                 </div>
             </div>
 
             <div class="col-xs-12">
                 <div class="card-panel">
                     <h6 class="bold">Остаток</h6>
-                    <h5 class="bold">{{ project.budget_left }} czk</h5>
+                    <h5 class="bold">{{ project.budget_left }} Kč</h5>
                 </div>
             </div>
 
@@ -50,11 +50,11 @@
                 <div class="card-panel">
                     <h6 class="bold">Ежедневный</h6>
                     {% if project.daily_budget > 500 %}
-                        <h5 class="bold green-text">{{ project.daily_budget }} czk</h5>
+                        <h5 class="bold green-text">{{ project.daily_budget }} Kč</h5>
                     {% elif project.daily_budget > 300 %}
-                        <h5 class="bold orange-text">{{ project.daily_budget }} czk</h5>
+                        <h5 class="bold orange-text">{{ project.daily_budget }} Kč</h5>
                     {% else %}
-                        <h5 class="bold red-text">{{ project.daily_budget }} czk</h5>
+                        <h5 class="bold red-text">{{ project.daily_budget }} Kč</h5>
                     {% endif %}
                 </div>
             </div>
@@ -72,9 +72,9 @@
                     <thead>
                     <tr>
                         <th>Дата</th>
-                        <th>День нед</th>
+                        <th>Д.н.</th>
                         <th>Сумма</th>
-                        <th>Категория</th>
+                        <th>Тип</th>
                         <th><span class="left">Коммент</span></th>
                         <th></th>
                     </tr>
@@ -85,9 +85,9 @@
                                 <th><span class="date">{{ expense.spend_date }}</span></th>
                                 <th><span class="title">{{ expense.week_day }}</span></th>
                                 {% if expense.category == 'Income' %}
-                                <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
                                 {% else %}
-                                <th><span class="title">{{ expense.amount }} czk</span>
+                                <th><span class="title">{{ expense.amount }} Kč</span>
                                 </th>
                                 {% endif %}
                                 <th><span class="title">{{ expense.category }}</span></th>
@@ -110,23 +110,23 @@
                         <thead>
                         <tr>
                             <th>Дата</th>
-                            <th>День нед</th>
+                            <th>Д.н.</th>
                             <th>Сумма</th>
-                            <th>Категория</th>
+                            <th>Тип</th>
                             <th><span class="left">Коммент</span></th>
                             <th></th>
                         </tr>
                         </thead>
-                        <tbody class="regular">
+                        <tbody>
                             {% for expense in expense_list %}
                             {% if expense.category == 'Daily' %}
-                                <tr class="regular">
+                                <tr>
                                     <th><span class="date">{{ expense.spend_date }}</span></th>
                                     <th><span class="title">{{ expense.week_day }}</span></th>
                                         {% if expense.category == 'Income' %}
-                                    <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                    <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
                                         {% else %}
-                                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                                    <th><span class="title">{{ expense.amount }} Kč</span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
                                     <th><span class="left">{{ expense.comment }}</span></th>
@@ -147,23 +147,23 @@
                         <thead>
                         <tr>
                             <th>Дата</th>
-                            <th>День нед</th>
+                            <th>Д.н.</th>
                             <th>Сумма</th>
-                            <th>Категория</th>
+                            <th>Тип</th>
                             <th><span class="left">Коммент</span></th>
                             <th></th>
                         </tr>
                         </thead>
-                        <tbody class="regular">
+                        <tbody>
                             {% for expense in expense_list %}
                             {% if expense.category == 'Plan' %}
-                                <tr class="regular">
+                                <tr>
                                     <th><span class="date">{{ expense.spend_date }}</span></th>
                                     <th><span class="title">{{ expense.week_day }}</span></th>
                                         {% if expense.category == 'Income' %}
-                                    <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                    <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
                                         {% else %}
-                                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                                    <th><span class="title">{{ expense.amount }} Kč</span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
                                     <th><span class="left">{{ expense.comment }}</span></th>
@@ -184,23 +184,23 @@
                         <thead>
                         <tr>
                             <th>Дата</th>
-                            <th>День нед</th>
+                            <th>Д.н.</th>
                             <th>Сумма</th>
-                            <th>Категория</th>
+                            <th>Тип</th>
                             <th><span class="left">Коммент</span></th>
                             <th></th>
                         </tr>
                         </thead>
-                        <tbody class="regular">
+                        <tbody>
                             {% for expense in expense_list %}
                             {% if expense.category == 'Recurr' %}
-                                <tr class="regular">
+                                <tr>
                                     <th><span class="date">{{ expense.spend_date }}</span></th>
                                     <th><span class="title">{{ expense.week_day }}</span></th>
                                         {% if expense.category == 'Income' %}
-                                    <th><span class="title green-text">{{ expense.amount }} czk</span></th>
+                                    <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
                                         {% else %}
-                                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                                    <th><span class="title">{{ expense.amount }} Kč</span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
                                     <th><span class="left">{{ expense.comment }}</span></th>
@@ -221,7 +221,7 @@
                         <thead>
                         <tr>
                             <th><span class="title bold">Дата</span></th>
-                            <th><span class="title bold">День нед</span></th>
+                            <th><span class="title bold">Д.н.</span></th>
                             <th><span class="title bold">Сумма</span></th>
                         </tr>
                         </thead>
