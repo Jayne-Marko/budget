@@ -75,4 +75,4 @@ class RecurrentExpense(models.Model):
         self.save()
 
     class Meta:
-        ordering = ('-spend_date', )
+        ordering = ('spend_date', )

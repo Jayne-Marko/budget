@@ -75,7 +75,8 @@
                         <th>День нед</th>
                         <th>Сумма</th>
                         <th>Категория</th>
-                        <th>Удалить</th>
+                        <th><span class="left">Коммент</span></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,8 +91,9 @@
                                 </th>
                                 {% endif %}
                                 <th><span class="title">{{ expense.category }}</span></th>
+                                <th><span class="left">{{ expense.comment }}</span></th>
                                 <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                                    <i class="material-icons red-text left">close</i>
+                                    <i class="material-icons red-text">close</i>
                                     </a>
                                 </th>
                             </tr>
@@ -111,7 +113,8 @@
                             <th>День нед</th>
                             <th>Сумма</th>
                             <th>Категория</th>
-                            <th>Удалить</th>
+                            <th><span class="left">Коммент</span></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody class="regular">
@@ -126,8 +129,9 @@
                                     <th><span class="title">{{ expense.amount }} czk</span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
+                                    <th><span class="left">{{ expense.comment }}</span></th>
                                     <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                                        <i class="material-icons red-text left">close</i>
+                                        <i class="material-icons red-text">close</i>
                                         </a>
                                     </th>
                                 </tr>
@@ -146,7 +150,8 @@
                             <th>День нед</th>
                             <th>Сумма</th>
                             <th>Категория</th>
-                            <th>Удалить</th>
+                            <th><span class="left">Коммент</span></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody class="regular">
@@ -161,8 +166,9 @@
                                     <th><span class="title">{{ expense.amount }} czk</span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
+                                    <th><span class="left">{{ expense.comment }}</span></th>
                                     <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                                        <i class="material-icons red-text left">close</i>
+                                        <i class="material-icons red-text">close</i>
                                         </a>
                                     </th>
                                 </tr>
@@ -181,7 +187,8 @@
                             <th>День нед</th>
                             <th>Сумма</th>
                             <th>Категория</th>
-                            <th>Удалить</th>
+                            <th><span class="left">Коммент</span></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody class="regular">
@@ -196,8 +203,9 @@
                                     <th><span class="title">{{ expense.amount }} czk</span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
+                                    <th><span class="left">{{ expense.comment }}</span></th>
                                     <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-                                        <i class="material-icons red-text left">close</i>
+                                        <i class="material-icons red-text">close</i>
                                         </a>
                                     </th>
                                 </tr>

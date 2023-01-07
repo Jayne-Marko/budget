@@ -19,6 +19,7 @@
 
 .recurrent-buttons .col-xs-6 {
     margin: 7px;
+    width: 100%;
 }
 /* project detail statistic */
 .section-stats .card-panel{
@@ -69,15 +70,22 @@
 }
 
 .section-expenses .expense {
-    font-size: 12px;
+    font-size: 13px;
     border-radius: 0;
     margin: 0px;
     padding: 0px 0px;
     width: 100%;
 }
 
-.section-expenses .expense thead tr{
+.section-expenses .expense thead th{
     background-color: #afaeae;
+    text-align: center;
+    font-weight: bold;
+}
+
+.section-expenses .expense tbody th{
+    text-align: center;
+    font-weight: normal;
 }
 
 .section-expenses .expense tr:nth-child(even) {

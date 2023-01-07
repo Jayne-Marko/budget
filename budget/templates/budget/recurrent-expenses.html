@@ -1,46 +1,39 @@
 {% extends 'budget/base.html' %}
 {% block content %}
 
-<div class="container">
-    <a href="{% url 'list' %}" class="btn-large grey">
-        <span class="bold">Back to months</span>
-    </a>
-
+<div id="month-details" class="container">
+    <table>
+        <tr>
+            <th><a href="#" onclick="history.back();return false;" class="green-button">Назад</a></th>
+            <th><button class="green-button waves-effect right modal-trigger" href="#recExpenseModal">Добавить расход</button></th>
+        </tr>
+    </table>
     <section class="section section-expenses">
-        <div class="row">
-            <button class="btn waves-effect right modal-trigger" href="#recExpenseModal">
-                <i class="material-icons white-text left">add circle</i>
-                Add Recurrent Expense</button>
-        </div>
-                    <ul class="z-depth-1">
-                   {% for expense in recurrent_expenses %}
-                        <li>
-                            <div class="card-panel z-depth-0 expense">
-                                <div class="row">
-                                    <div class="col 14">
-                                        <span class="date">{{ expense.spend_date }}</span>
-                                    </div>
-                                    <div class="col 14">
-                                        <span class="title">{{ expense.week_day }}</span>
-                                    </div>
-                                    <div class="col 14">
-                                        <span class="title">{{ expense.amount }} czk</span>
-                                    </div>
-                                    <div class="col 14">
-                                        <span class="title bold">{{ expense.category }}</span>
-                                    </div>
-                                    <div class="col 14">
-                                        <span class="title">{{ expense.comment }}</span>
-                                    </div>
-                                    <a class="close-icon" onclick="deleteRecExpense(this)" data-id="{{ expense.id }}">
-                                        <i class="material-icons red-text right">close</i>
-                                    </a>
+        <table class="expense">
+            <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Сумма</th>
+                <th>Категория</th>
+                <th><span class="left">Коммент</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
 
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                    </ul>
+                {% for expense in recurrent_expenses %}
+                <tr>
+                    <th><span class="date">{{ expense.spend_date }}</span></th>
+                    <th><span class="title">{{ expense.amount }} czk</span></th>
+                    <th><span class="title">{{ expense.category }}</span></th>
+                    <th><span class="title left">{{ expense.comment }}</span></th>
+                    <th><a class="close-icon" onclick="deleteRecExpense(this)" data-id="{{ expense.id }}">
+                            <i class="material-icons red-text">close</i>
+                        </a></th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </section>
 
 </div>
