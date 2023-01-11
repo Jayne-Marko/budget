@@ -213,7 +213,7 @@ class ProjectUpdateView(UpdateView):
     model = Project
     template_name = 'budget/edit-project.html'
     fields = ('name', 'budget', 'start_date', 'end_date')
-    success_url = "/"
+    success_url = reverse_lazy('list')
 
 
 class ProjectDeleteView(DeleteView):
