@@ -16,17 +16,17 @@ recurrent = [
 
 
 class ExpenseForm(forms.Form):
-    spend_date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
-    amount = forms.CharField()
-    category = forms.ChoiceField(choices=spends)
-    comment = forms.CharField(required=False)
+    spend_date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}), label='Дата')
+    amount = forms.CharField(label='Сумма')
+    category = forms.ChoiceField(choices=spends, label='Категория')
+    comment = forms.CharField(required=False, label='Комментарий')
 
 
 class RecurrentExpenseForm(forms.Form):
-    spend_date = forms.IntegerField()
-    amount = forms.IntegerField()
-    category = forms.ChoiceField(choices=recurrent)
-    comment = forms.CharField(required=False)
+    spend_date = forms.IntegerField(label='Число (день месяца)')
+    amount = forms.IntegerField(label='Сумма')
+    category = forms.ChoiceField(choices=recurrent, label='Категория')
+    comment = forms.CharField(required=False, label='Комментарий')
 
 
 class RegisterUserForm(UserCreationForm):

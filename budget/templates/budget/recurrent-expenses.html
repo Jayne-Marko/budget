@@ -40,10 +40,14 @@
 
 <div id="recExpenseModal" class="modal">
     <div class="modal-content">
-        <h4>Add Recurrent Expense</h4>
+        <h4>Добавить регулярный расход</h4>
+
         <form method="POST">
             {% csrf_token %}
-            {{form_rec_expense.as_p}}
+            {% for field in form_rec_expense.visible_fields %}
+                <p>{{ field.label_tag }}</p>
+                <p>{{ field }}</p>
+            {% endfor %}
             <button type="submit" class="green-button">Добавить</button>
         </form>
     </div>

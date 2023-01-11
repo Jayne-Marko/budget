@@ -246,11 +246,14 @@
 
 <div id="expenseModal" class="modal">
     <div class="modal-content">
-        <h4>Add Expense</h4>
+        <h4>Добавить расход</h4>
 
         <form method="POST">
             {% csrf_token %}
-            {{form_expense.as_p}}
+            {% for field in form_expense.visible_fields %}
+                <p>{{ field.label_tag }}</p>
+                <p>{{ field }}</p>
+            {% endfor %}
             <button type="submit" class="green-button">Добавить</button>
         </form>
     </div>
