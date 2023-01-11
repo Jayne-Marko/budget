@@ -1,0 +1,30 @@
+{% extends "budget/base.html" %}
+
+{% block content %}
+{% if form.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Неправильные логин и пароль
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+<div class="shadow p-4 mb-5 bg-body rounded" id="form-card">
+
+        <h5 class="app-title">Login</h5>
+        <form action="" method=POST>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <div class="row">
+            <div class="col"><button type="submit" class="green-button">Войти</button></div>
+            <div class="col"><button type="button" onclick="location.href='{% url 'home' %}'" class="green-button">Назад</button></div>
+            </div>
+        </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<div class="row p-3">
+    <div class="col">
+        <h1 class="app-title">Бюджет</h1>
+    </div>
+</div>
+{% if user.is_authenticated %}
+    <p class="user_name">Hello {{ user.username }} </p>
+        <a href="{% url 'logout' %}"><button class="blue-button">Log out</button></a>
+        <a href="{% url 'list' %}"><button class="blue-button">Start</button></a>
+{% else %}
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'login' %}"><button class="green-button">Войти</button></a>
+        </div>
+        <div class="col">
+            <a href="{% url 'register_user' %}"><button class="green-button">Зарегистрироваться</button></a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

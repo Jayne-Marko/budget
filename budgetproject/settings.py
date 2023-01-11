@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'budget',
 ]
 
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [

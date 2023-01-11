@@ -2,17 +2,31 @@
 {% block content %}
 
 
-<div id="month-list" class="container">
+    <div class="row p-3">
+        <div class="col text-right">
+            <span class="user_name">Hello, {{ user.username }} </span>
+            <button onclick="location.href='{% url 'logout' %}'" class="logout-button">Log out</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <h1 class="app-title">Бюджет</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col">
+        <select class="form-select" id="currName" onchange="getCurrency(this);">
+                <option>Валюта</option>
+                <option value="₽">Руб - ₽</option>
+                <option value="Kč">CZK - Kč</option>
+                <option value="€">Euro - €</option>
+            </select>
+        </div>
+        <div class="col">
             <button onclick="location.href='{% url 'add' %}'" class="green-button right">Добавить месяц</button>
         </div>
     </div>
+    {% if project_list %}
     <div class="expense_tabs">
         <input type="radio" name="expense_tabs" id="past_months" checked="checked">
         <label for="past_months">Прошедшие месяца</label>
@@ -20,27 +34,19 @@
             {% for project in past_months %}
             <div class="card-panel">
                 <h5>{{ project.name }}</h5>
-                <span>Даты: {{ project.start_date }} - {{ project.end_date }}</span>
-                <span><p>Бюджет: {{ project.budget }} Kč</p></span>
-                <div class="row gx-10">
-                    <div class="col-xs-4 p-2">
+                <span>Даты: {{ project.start_date }} - {{ project.end_date }}
+                <p>Бюджет: {{ project.budget }} <span class="csym"></span></p></span>
+                <div class="row">
+                    <div class="col p-2">
                         <button onclick="location.href='{% url 'detail' project.slug %}'" class="blue-button center">View</button>
                     </div>
-                    <div class="col-xs-4 p-2">
+                    <div class="col p-2">
                         <button onclick="location.href='{% url 'edit' project.pk %}'" class="blue-button center">Edit</button>
                     </div>
-                    <div class="col-xs-4 p-2">
+                    <div class="col p-2">
                         <button onclick="location.href='{% url 'delete' project.pk %}'" class="blue-button center">Delete</button>
                     </div>
                 </div>
-            </div>
-            {% empty %}
-            <div class="noproject-wrapper center">
-                <h3 class="grey-text">Sorry, you don't have any projects yet.</h3>
-                <a href="{% url 'add' %}" class="btn-large grey">
-                    <i class="material-icons white-text left">add circle</i>
-                    <span class="bold">Add Month</span>
-                </a>
             </div>
             {% endfor %}
         </div>
@@ -50,16 +56,16 @@
             {% for project in future_months %}
             <div class="card-panel">
                 <h5>{{ project.name }}</h5>
-                <span>Даты: {{ project.start_date }} - {{ project.end_date }}</span>
-                <span><p>Бюджет: {{ project.budget }} Kč</p></span>
-                <div class="row gx-10">
-                    <div class="col-xs-4 p-2">
+                <span>Даты: {{ project.start_date }} - {{ project.end_date }}
+                <p>Бюджет: {{ project.budget }} <span class="csym"></span></p></span>
+                <div class="row">
+                    <div class="col p-2">
                         <button onclick="location.href='{% url 'detail' project.slug %}'" class="blue-button center">View</button>
                     </div>
-                    <div class="col-xs-4 p-2">
+                    <div class="col p-2">
                         <button onclick="location.href='{% url 'edit' project.pk %}'" class="blue-button center">Edit</button>
                     </div>
-                    <div class="col-xs-4 p-2">
+                    <div class="col p-2">
                         <button onclick="location.href='{% url 'delete' project.pk %}'" class="blue-button center">Delete</button>
                     </div>
                 </div>
@@ -67,5 +73,9 @@
             {% endfor %}
         </div>
     </div>
-</div>
+    {% else %}
+    <div class="noproject-wrapper center">
+        <h3 class="grey-text">Нажми на кнопку "Добавить месяц"</h3>
+    </div>
+    {% endif %}
 {% endblock %}

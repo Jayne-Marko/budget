@@ -1,68 +1,71 @@
 {% extends 'budget/base.html' %}
 {% block content %}
-
-<div id="month-details" class="container">
-    <div class="row right">
-        <div class="col-xs-12">
-            <button onclick="location.href='{% url 'list' %}'" class="green-button right">На главную</button>
+    <div class="row p-3">
+        <div class="col-5">
+            <button onclick="location.href='{% url 'list' %}'" class="green-button">На главную</button>
+        </div>
+        <div class="col-7 text-right">
+            <span class="user_name">Hello, {{ user.username }} </span>
+            <button onclick="location.href='{% url 'logout' %}'" class="logout-button">Log out</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col text-center">
             <h1 class="app-title">{{ project.name }}</h1>
         </div>
     </div>
     <div class="row" id="dates">
-        <div class="col-xs-12">
+        <div class="col">
             <span>Даты: {{ project.start_date }} - {{ project.end_date }}</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6 p-1">
+        <div class="col">
             <button class="blue-button" onclick="location.href='{% url 'add_recurrent' project.slug %}'">Добавить регулярные</button></div>
-        <div class="col-xs-6 p-1">
+        <div class="col">
             <button class="blue-button" onclick="location.href='{% url 'recurrent' %}'">Список регулярных</button>
         </div>
     </div>
     <section class="section section-stats">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col">
                 <div class="card-panel">
                     <h6 class="bold">Тотал доход</h6>
-                    <h5 class="bold">{{ project.budget }} Kč</h5>
+                    <h5 class="bold">{{ project.budget }} <span class="csym"></span></h5>
                 </div>
             </div>
-
-            <div class="col-xs-12">
+            <div class="col">
                 <div class="card-panel">
                     <h6 class="bold">Остаток</h6>
-                    <h5 class="bold">{{ project.budget_left }} Kč</h5>
+                    <h5 class="bold">{{ project.budget_left }} <span class="csym"></span></h5>
                 </div>
             </div>
 
-            <div class="col-xs-12">
-                <div class="card-panel">
-                    <h6 class="bold">Дней до зп</h6>
-                    <h5 class="bold">{{ project.days_to_income }}</h5>
+                <div class="col">
+                    <div class="card-panel">
+                        <h6 class="bold">Дней до зп</h6>
+                        <h5 class="bold">{{ project.days_to_income }}</h5>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-panel">
+                        <h6 class="bold">Ежедневный</h6>
+                        {% if project.daily_budget > 500 %}
+                            <h5 class="bold green-text">{{ project.daily_budget }} <span class="csym green-text"></span></h5>
+                        {% elif project.daily_budget > 300 %}
+                            <h5 class="bold orange-text">{{ project.daily_budget }} <span class="csym orange-text"></span></h5>
+                        {% else %}
+                            <h5 class="bold red-text">{{ project.daily_budget }} <span class="csym red-text"></span></h5>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <div class="card-panel">
-                    <h6 class="bold">Ежедневный</h6>
-                    {% if project.daily_budget > 500 %}
-                        <h5 class="bold green-text">{{ project.daily_budget }} Kč</h5>
-                    {% elif project.daily_budget > 300 %}
-                        <h5 class="bold orange-text">{{ project.daily_budget }} Kč</h5>
-                    {% else %}
-                        <h5 class="bold red-text">{{ project.daily_budget }} Kč</h5>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
     </section>
-    <div class="row right">
-            <button class="green-button waves-effect right modal-trigger" href="#expenseModal">Добавить расход</button>
-        </div>
+    <div class="row">
+        <di class="col">
+            <button class="green-button waves-effect right modal-trigger right" href="#expenseModal">Добавить расход</button>
+        </di>
+    </div>
     <section class="section section-expenses">
         <div class="expense_tabs">
             <input type="radio" name="expense_tabs" id="all_expense" checked="checked">
@@ -85,9 +88,9 @@
                                 <th><span class="date">{{ expense.spend_date }}</span></th>
                                 <th><span class="title">{{ expense.week_day }}</span></th>
                                 {% if expense.category == 'Income' %}
-                                <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
+                                <th><span class="title green-text">{{ expense.amount }} <span class="csym"></span></span></th>
                                 {% else %}
-                                <th><span class="title">{{ expense.amount }} Kč</span>
+                                <th><span class="title">{{ expense.amount }} <span class="csym"></span></span>
                                 </th>
                                 {% endif %}
                                 <th><span class="title">{{ expense.category }}</span></th>
@@ -124,9 +127,9 @@
                                     <th><span class="date">{{ expense.spend_date }}</span></th>
                                     <th><span class="title">{{ expense.week_day }}</span></th>
                                         {% if expense.category == 'Income' %}
-                                    <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
+                                    <th><span class="title green-text">{{ expense.amount }} <span class="csym"></span></span></th>
                                         {% else %}
-                                    <th><span class="title">{{ expense.amount }} Kč</span></th>
+                                    <th><span class="title">{{ expense.amount }} <span class="csym"></span></span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
                                     <th><span class="left">{{ expense.comment }}</span></th>
@@ -161,9 +164,9 @@
                                     <th><span class="date">{{ expense.spend_date }}</span></th>
                                     <th><span class="title">{{ expense.week_day }}</span></th>
                                         {% if expense.category == 'Income' %}
-                                    <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
+                                    <th><span class="title green-text">{{ expense.amount }} </span><span class="csym"></span></th>
                                         {% else %}
-                                    <th><span class="title">{{ expense.amount }} Kč</span></th>
+                                    <th><span class="title">{{ expense.amount }} </span><span class="csym"></span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
                                     <th><span class="left">{{ expense.comment }}</span></th>
@@ -198,9 +201,9 @@
                                     <th><span class="date">{{ expense.spend_date }}</span></th>
                                     <th><span class="title">{{ expense.week_day }}</span></th>
                                         {% if expense.category == 'Income' %}
-                                    <th><span class="title green-text">{{ expense.amount }} Kč</span></th>
+                                    <th><span class="title green-text">{{ expense.amount }} <span class="csym"></span></span></th>
                                         {% else %}
-                                    <th><span class="title">{{ expense.amount }} Kč</span></th>
+                                    <th><span class="title">{{ expense.amount }} <span class="csym"></span></span></th>
                                         {% endif %}
                                     <th><span class="title">{{ expense.category }}</span></th>
                                     <th><span class="left">{{ expense.comment }}</span></th>
@@ -240,7 +243,6 @@
         </div>
     </section>
 
-</div>
 
 <div id="expenseModal" class="modal">
     <div class="modal-content">
@@ -249,7 +251,7 @@
         <form method="POST">
             {% csrf_token %}
             {{form_expense.as_p}}
-            <button type="submit" class="btn">Add</button>
+            <button type="submit" class="green-button">Добавить</button>
         </form>
     </div>
 </div>

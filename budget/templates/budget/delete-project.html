@@ -9,18 +9,19 @@
                 <h5>Точно хочешь удалить месяц?</h5>
             </div>
         </div>
-        <div class="row gx-10">
-            <div class="col-xs-6">
+
                 <form action="" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="green-button">Да, удалить</button>
+                    <div class="row">
+                    <div class="col">
+                        <button type="submit" class="green-button">Да, удалить</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" onclick="location.href='{% url 'list' %}'" class="green-button">Назад</button>
+                    </div>
+                        </div>
                 </form>
-            </div>
-            <div class="col-xs-6">
-                <button onclick="location.href='{% url 'list' %}'" class="green-button">Назад</button>
-            </div>
-        </div>
     </div>
 </div>
 

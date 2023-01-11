@@ -24,7 +24,7 @@
                 {% for expense in recurrent_expenses %}
                 <tr>
                     <th><span class="date">{{ expense.spend_date }}</span></th>
-                    <th><span class="title">{{ expense.amount }} Kč</span></th>
+                    <th><span class="title">{{ expense.amount }} <span class="csym"></span></span></th>
                     <th><span class="title">{{ expense.category }}</span></th>
                     <th><span class="title left">{{ expense.comment }}</span></th>
                     <th><a class="close-icon" onclick="deleteRecExpense(this)" data-id="{{ expense.id }}">
@@ -43,8 +43,8 @@
         <h4>Add Recurrent Expense</h4>
         <form method="POST">
             {% csrf_token %}
-                {{form_rec_expense.as_p}}
-            <button type="submit" class="btn">Add</button>
+            {{form_rec_expense.as_p}}
+            <button type="submit" class="green-button">Добавить</button>
         </form>
     </div>
 </div>
@@ -59,7 +59,7 @@
     function deleteRecExpense(e){
 
         let id = e.dataset.id
-        e.closest('li').remove()
+        e.closest('tr').remove()
 
         fetch('', {
             method: 'DELETE',

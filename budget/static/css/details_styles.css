@@ -2,16 +2,6 @@
     font-weight: unset;
 }
 
-#month-details {
-    width: 100%;
-    border-color: transparent;
-    background-color: #E0E0E0;
-    align-self: center;
-    font-family: Alegreya+SC;
-    padding: 0px 5px;
-    padding-top: 15px;
-}
-
 #dates {
     font-weight: bold;
     color: #606060;
@@ -27,6 +17,7 @@
     padding: 10px 10px;
     width: 150px;
 }
+
 .section-stats h6{
     margin: 3px 0px;
     color: #606060;
