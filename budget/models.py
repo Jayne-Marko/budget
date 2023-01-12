@@ -44,6 +44,9 @@ class Project(models.Model):
         except:
             return 0
 
+    class Meta:
+        ordering = ('-start_date', )
+
 
 class Expense(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='expenses')

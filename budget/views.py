@@ -64,11 +64,10 @@ def project_list(request):
     project_list = Project.objects.filter(user_id=request.user)
     past_months = [month for month in project_list if month.start_date <= date.today()]
     fututre_months = [month for month in project_list if month.start_date > date.today()]
-    currency = ['₽', 'Kč', '€', '$']
+    sort_fm = sorted(fututre_months, key=lambda x: x.start_date)
     return render(request, 'budget/project-list.html', {'past_months': past_months,
-                                                        'future_months': fututre_months,
+                                                        'future_months': sort_fm,
                                                         'project_list': project_list,
-                                                        'currency': currency
                                                         })
 
 
