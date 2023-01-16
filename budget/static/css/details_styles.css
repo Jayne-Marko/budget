@@ -110,3 +110,8 @@
 }
 
 #main:target {display: block;}
+
+.material-icons {
+    color: #606060;
+    font-size: 18px;
+}

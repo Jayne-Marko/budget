@@ -16,8 +16,8 @@ recurrent = [
 
 
 class ExpenseForm(forms.Form):
-    spend_date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}), label='Дата')
     amount = forms.CharField(label='Сумма')
+    spend_date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}), label='Дата')
     category = forms.ChoiceField(choices=spends, label='Категория')
     comment = forms.CharField(required=False, label='Комментарий')
 
@@ -44,3 +44,4 @@ class RegisterUserForm(UserCreationForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['class'] = 'form-control'
+

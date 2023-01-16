@@ -16,10 +16,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
-def home(request):
-    return render(request, 'budget/home.html')
-
-
 def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -39,7 +35,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, ("You Were Logged Out!"))
-    return redirect('home')
+    return redirect('list')
 
 
 def register_user(request):
@@ -59,16 +55,19 @@ def register_user(request):
     return render(request, 'registration/register.html', {'form': form,})
 
 
-@login_required
+#@login_required
 def project_list(request):
-    project_list = Project.objects.filter(user_id=request.user)
-    past_months = [month for month in project_list if month.start_date <= date.today()]
-    fututre_months = [month for month in project_list if month.start_date > date.today()]
-    sort_fm = sorted(fututre_months, key=lambda x: x.start_date)
-    return render(request, 'budget/project-list.html', {'past_months': past_months,
-                                                        'future_months': sort_fm,
-                                                        'project_list': project_list,
-                                                        })
+    if request.user.is_authenticated:
+        project_list = Project.objects.filter(user_id=request.user)
+        past_months = [month for month in project_list if month.start_date <= date.today()]
+        fututre_months = [month for month in project_list if month.start_date > date.today()]
+        sort_fm = sorted(fututre_months, key=lambda x: x.start_date)
+        return render(request, 'budget/project-list.html', {'past_months': past_months,
+                                                            'future_months': sort_fm,
+                                                            'project_list': project_list,
+                                                            })
+    else:
+        return render(request, 'budget/project-list.html')
 
 
 @login_required
@@ -103,6 +102,7 @@ def add_recurrent(request, project_slug):
 @login_required
 def project_detail(request, project_slug):
     project = get_object_or_404(Project, user_id=request.user, slug=project_slug)
+    form_expense = ExpenseForm(request.POST)
 
     def get_daily_total():
         expense_list = Expense.objects.filter(project=project)
@@ -117,23 +117,18 @@ def project_detail(request, project_slug):
         return day_expense_list
 
     if request.method == 'GET':
-        form_expense = ExpenseForm(request.POST)
         return render(request, 'budget/project-detail.html', {'project': project,
                                                               'expense_list': project.expenses.all(),
                                                               'day_expense_list': get_daily_total(),
                                                               'form_expense': form_expense,
                                                               })
-
     elif request.method == 'POST':
-        # process the form
-        form_expense = ExpenseForm(request.POST)
         if form_expense.is_valid():
             spend_date = form_expense.cleaned_data['spend_date']
             amount = form_expense.cleaned_data['amount']
             category_name = form_expense.cleaned_data['category']
             comment = form_expense.cleaned_data['comment']
 
-            # category = get_object_or_404(Category, project=project, name=category_name)
             sum_amount = eval(amount)
 
             Expense.objects.create(
@@ -211,8 +206,20 @@ class ProjectCreateView(CreateView):
 class ProjectUpdateView(UpdateView):
     model = Project
     template_name = 'budget/edit-project.html'
-    fields = ('name', 'budget', 'start_date', 'end_date')
-    success_url = reverse_lazy('list')
+    fields = ('budget', 'start_date', 'end_date')
+
+    def get_form(self, form_class=None):
+        form = super(ProjectUpdateView, self).get_form(form_class)
+        form.fields['start_date'].widget = AdminDateWidget(attrs={'type': 'date'})
+        form.fields['end_date'].widget = AdminDateWidget(attrs={'type': 'date'})
+        return form
+
+    def form_valid(self, form):
+        form.instance.slug = slugify(str(form.fields['start_date']))
+        self.object = form.save(commit=False)
+        self.object.save()
+
+        return HttpResponseRedirect(reverse_lazy('list'))
 
 
 class ProjectDeleteView(DeleteView):
@@ -221,4 +228,18 @@ class ProjectDeleteView(DeleteView):
     success_url = reverse_lazy('list')
 
 
+class ExpenseEditView(UpdateView):
+    model = Expense
+    template_name = 'budget/edit-expense.html'
+    fields = ('amount', 'spend_date', 'category', 'comment')
 
+    def get_form(self, form_class=None):
+        form = super(ExpenseEditView, self).get_form(form_class)
+        form.fields['spend_date'].widget = AdminDateWidget(attrs={'type': 'date'})
+        return form
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+
+        return redirect('detail', project_slug=self.object.project.slug)

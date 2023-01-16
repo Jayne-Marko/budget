@@ -14,9 +14,8 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         month_name = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь','Октябрь', 'Ноябрь', 'Декабрь']
-        month_slug = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
-        self.name = month_name[self.start_date.month - 1]
-        self.slug = slugify(month_slug[self.start_date.month - 1])
+        self.name = month_name[self.start_date.month - 1] + " " + str(self.start_date.year)
+        self.slug = slugify(str(self.start_date))
         super(Project, self).save(*args, **kwargs)
 
     def budget_left(self):
@@ -44,6 +43,10 @@ class Project(models.Model):
         except:
             return 0
 
+    def current_month(self):
+        if self.start_date <= date.today() <= self.end_date:
+            return True
+
     class Meta:
         ordering = ('-start_date', )
 
@@ -52,7 +55,7 @@ class Expense(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='expenses')
     spend_date = models.DateField(default=date.today())
     comment = models.CharField(max_length=100, blank=True)
-    amount = models.IntegerField()
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
     category = models.CharField(max_length=100)
 
     def week_day(self):
@@ -67,7 +70,7 @@ class RecurrentExpense(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     spend_date = models.IntegerField()
     comment = models.CharField(max_length=100, blank=True)
-    amount = models.IntegerField()
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
     category = models.CharField(max_length=100)
 
     def get_category(self):

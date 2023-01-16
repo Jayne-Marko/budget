@@ -63,7 +63,7 @@
     </section>
     <div class="row">
         <di class="col">
-            <button class="green-button waves-effect right modal-trigger right" href="#expenseModal">Добавить расход</button>
+            <button class="green-button waves-effect right modal-trigger" href="#expenseModal">Добавить расход</button>
         </di>
     </div>
     <section class="section section-expenses">
@@ -80,6 +80,7 @@
                         <th>Тип</th>
                         <th><span class="left">Коммент</span></th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,6 +96,10 @@
                                 {% endif %}
                                 <th><span class="title">{{ expense.category }}</span></th>
                                 <th><span class="left">{{ expense.comment }}</span></th>
+                                <!-- <th><button class="blue-button waves-effect modal-trigger" href="#expenseEdit" data-id="{{ expense.id }}">Edit</button></th>-->
+                                <th><a href="{% url 'exp_edit' project.slug expense.pk %}">
+                                    <i class="material-icons">edit</i>
+                                </a></th>
                                 <th><a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
                                     <i class="material-icons red-text">close</i>
                                     </a>
@@ -104,7 +109,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-
             </div>
             <input type="radio" name="expense_tabs" id="daily_expense">
             <label for="daily_expense">Daily</label>
@@ -259,6 +263,7 @@
     </div>
 </div>
 
+
 <script>
     var elem = document.querySelector('.modal')
     var instance = M.Modal.init(elem)
@@ -283,6 +288,7 @@
             credentials: 'same-origin'
         })
     }
+
 </script>
 
 {% endblock %}

@@ -1,7 +1,6 @@
 {% extends 'budget/base.html' %}
 {% block content %}
-
-
+{% if user.is_authenticated %}
     <div class="row p-3">
         <div class="col text-right">
             <span class="user_name">Hello, {{ user.username }} </span>
@@ -33,7 +32,11 @@
         <div class="tab">
             {% for project in past_months %}
             <div class="card-panel">
-                <h5>{{ project.name }}</h5>
+                {% if project.current_month %}
+                <h5>{{ project.name }} <span class="badge bg-success white-text">Текущий</span></h5>
+                {% else %}
+                <h5>{{ project.name }} </h5>
+                {% endif %}
                 <span>Даты: {{ project.start_date }} - {{ project.end_date }}
                 <p>Бюджет: {{ project.budget }} <span class="csym"></span></p></span>
                 <div class="row">
@@ -78,4 +81,19 @@
         <h3 class="grey-text">Нажми на кнопку "Добавить месяц"</h3>
     </div>
     {% endif %}
+{% else %}
+    <div class="row p-3">
+        <div class="col-sm-12">
+            <h1 class="app-title">Бюджет</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'login' %}"><button class="green-button">Войти</button></a>
+        </div>
+        <div class="col">
+            <a href="{% url 'register_user' %}"><button class="green-button">Зарегистрироваться</button></a>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
