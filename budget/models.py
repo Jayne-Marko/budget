@@ -23,9 +23,9 @@ class Project(models.Model):
         total_expense_amount = 0
         total_income = self.budget
         for expense in expense_list:
-            if expense.category != 'Income':
+            if expense.category != 'Income' and expense.spend_date <= date.today():
                 total_expense_amount += expense.amount
-            else:
+            elif expense.category == 'Income':
                 total_income += expense.amount
         return total_income - total_expense_amount
 
