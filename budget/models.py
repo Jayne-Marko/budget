@@ -35,9 +35,20 @@ class Project(models.Model):
         else:
             return (self.end_date - self.start_date).days
 
+    def budget_left_total(self):
+        expense_list = Expense.objects.filter(project=self)
+        total_expense_amount = 0
+        total_income = self.budget
+        for expense in expense_list:
+            if expense.category != 'Income':
+                total_expense_amount += expense.amount
+            else:
+                total_income += expense.amount
+        return total_income - total_expense_amount
+
     def daily_budget(self):
         days_left = self.days_to_income()
-        budget_left = self.budget_left()
+        budget_left = self.budget_left_total()
         try:
             return round(budget_left / days_left)
         except:
